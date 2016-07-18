@@ -5,6 +5,7 @@
   </div>
   <p class="control has-addons">
     <input
+      id="drinkput"
       class="input"
       type="text"
       placeholder="Noun"
@@ -24,9 +25,10 @@
         <h4>{{ npm.stat }}</h4>
       </p>
     </div>
-    <div v-if="youDrink === false">
+    <div v-if="!loading && youDrink === false">
       <p>
         <img v-bind:src="noDrink">
+        <h4>{{ lastPackageName }}??</h4>
         <h2>NO DRINK</h2>
       </p>
       <p>
@@ -52,6 +54,7 @@ export default {
       loading: false,
       youDrink: null,
       packageName: '',
+      lastPackageName: '',
       npm: {
         title: null,
         summary: null
@@ -67,18 +70,25 @@ export default {
     }
   },
   methods: {
+    onFinish() {
+      this.loading = false;
+      this.packageName = '';
+    },
+
     findPackage () {
+      this.$el.parentElement.querySelector('#drinkput').blur();
       this.loading = true;
       finder(this.packageName)
       .then(res => {
         this.youDrink = true
         this.npm.title = res.name;
         this.npm.summary = res.description;
-        this.loading = false;
+        this.onFinish();
       })
       .catch(err => {
         this.youDrink = false;
-        this.loading = false;
+        this.lastPackageName = this.packageName;
+        this.onFinish();
       })
     }
   }
