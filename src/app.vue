@@ -1,10 +1,19 @@
 <template>
   <h1>npm powered mood</h1>
+  <div v-if="loading">
+    <loading></loading>
+  </div>
   <p class="control has-addons">
-    <input class="input" type="text" placeholder="Noun" v-model="packageName">
+    <input
+      class="input"
+      type="text"
+      placeholder="Noun"
+      v-model="packageName"
+      v-on:keyup.13="findPackage"
+    >
     <a class="button is-info" v-on:click="findPackage" v-if="!loading">CHECK</a>
     <a class="button is-info is-loading is-disabled" v-if="loading">CHECK</a>
-    <div v-if="youDrink === true">
+    <div v-if="!loading && youDrink">
       <p>
         <img v-bind:src="drink">
         <h2>YOU DRINK!!</h2>
@@ -33,12 +42,16 @@
 
 <script>
 import finder from './find-package';
+import loading from './loading.vue';
 
 export default {
+  components: { loading },
+
   data () {
     return {
+      loading: false,
       youDrink: null,
-      packageName: 'hello',
+      packageName: '',
       npm: {
         title: null,
         summary: null
@@ -55,15 +68,18 @@ export default {
   },
   methods: {
     findPackage () {
+      this.loading = true;
       finder(this.packageName)
       .then(res => {
         this.youDrink = true
         this.npm.title = res.name;
         this.npm.summary = res.description;
+        this.loading = false;
       })
       .catch(err => {
         this.youDrink = false;
-      });
+        this.loading = false;
+      })
     }
   }
 }
@@ -99,5 +115,20 @@ small, small a {
 }
 .twitter-tweet.twitter-tweet-rendered {
   margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 5em;
+    margin: 0.5em 0;
+  }
+
+  h2 {
+    font-size: 8em;
+  }
+
+  small, small a {
+    font-size: 1.5em;
+  }
 }
 </style>
