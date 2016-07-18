@@ -1,5 +1,5 @@
 <template>
-  <h1>npm powered mood</h1>
+  <h1>npmdrink</h1>
   <div v-if="loading">
     <loading></loading>
   </div>
@@ -138,7 +138,7 @@ small, small a {
   }
 
   small, small a {
-    font-size: 1.5em;
+    font-size: 1.1em;
   }
 }
 </style>
