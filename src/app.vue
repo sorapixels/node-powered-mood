@@ -1,5 +1,5 @@
 <template>
-  <h1>npm powered mood</h1>
+  <h1>npm drink</h1>
   <div v-if="loading">
     <loading></loading>
   </div>
