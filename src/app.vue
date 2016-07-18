@@ -1,18 +1,16 @@
 <template>
-  <div id="app">
-    <h1>{{ msg }}</h1>
-  </div>
+  <h1>npm powered mood</h1>
+  <p class="control has-addons">
+    <input class="input is-large" type="text" placeholder="Word">
+    <a class="button is-info is-large">CHECK</a>
+    <img src="/static/images/drink-1.gif">
+  </p>
 </template>
 
 <script>
 export default {
   data () {
     return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
-      msg: 'Hello Vue!'
     }
   }
 }
@@ -20,6 +18,15 @@ export default {
 
 <style>
 body {
-  font-family: Helvetica, sans-serif;
+  font-family: 'Suez One';
+  text-align: center;
+}
+h1 {
+  font-size: 3em;
+  margin: 1em 0 1em
+}
+.has-addons {
+  justify-content: center;
+  margin: 1em auto
 }
 </style>
