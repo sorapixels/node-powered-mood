@@ -2,7 +2,8 @@
   <h1>npm powered mood</h1>
   <p class="control has-addons">
     <input class="input" type="text" placeholder="Noun" v-model="packageName">
-    <a class="button is-info" v-on:click="findPackage">CHECK</a>
+    <a class="button is-info" v-on:click="findPackage" v-if="!loading">CHECK</a>
+    <a class="button is-info is-loading is-disabled" v-if="loading">CHECK</a>
     <div v-if="youDrink === true">
       <p>
         <img v-bind:src="drink">
@@ -93,7 +94,7 @@ h4 {
 small, small a {
   color: #ccc;
   font-size: 3vw;
-  margin-top: 12px;
+  margin-top: 1.5em;
   display: inline-block;
 }
 .twitter-tweet.twitter-tweet-rendered {
