@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://npm-search.tuvistavie.com/';
+const BASE_URL = 'https://npm-search.tuvistavie.com/';
 
 export default function findPackage(name) {
   const url = BASE_URL + name;
