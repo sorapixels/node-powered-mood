@@ -39,7 +39,7 @@
       <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Drinking game for npm users:<br>➀ Think of a noun<br>➁ npm install &lt;noun&gt;<br>➂ If it installs - drink!</p>&mdash; Sindre Sorhus (@sindresorhus) <a href="https://twitter.com/sindresorhus/status/515511151669805056">September 26, 2014</a></blockquote>
     </div>
   </p>
-  <small><a href="https://sorapixels.com">Sorapixels</a></small>
+  <small><a href="https://github.com/sorapixels/npmdrink">npmdrink on Github</a></small>
 </template>
 
 <script>
@@ -48,6 +48,10 @@ import loading from './loading.vue';
 
 export default {
   components: { loading },
+
+  ready () {
+    twttr.widgets.load();
+  },
 
   data () {
     return {
