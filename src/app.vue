@@ -3,42 +3,51 @@
   <div v-if="loading">
     <loading></loading>
   </div>
-  <p class="control has-addons">
+
+  <div class="control has-addons">
     <input
       id="drinkput"
       class="input"
       type="text"
       placeholder="Noun"
       v-model="packageName"
-      v-on:keyup.13="findPackage"
-    >
+      v-on:keyup.13="findPackage" />
     <a class="button is-info" v-on:click="findPackage" v-if="!loading">CHECK</a>
     <a class="button is-info is-loading is-disabled" v-if="loading">CHECK</a>
-    <div v-if="!loading && youDrink">
-      <p>
-        <img v-bind:src="drink">
-        <h2>YOU DRINK!!</h2>
-      </p>
-      <p>
-        <h3><a href="https://npmjs.com/package/{{ npm.title }}" target="_blank">{{ npm.title }}</a></h3>
-        <h4>{{ npm.summary }}</h4>
-        <h4>{{ npm.stat }}</h4>
-      </p>
+  </div>
+
+  <div v-if="state === 'drink'">
+    <div>
+      <img v-bind:src="drink">
+      <h2>YOU DRINK!!</h2>
     </div>
-    <div v-if="!loading && youDrink === false">
-      <p>
-        <img v-bind:src="noDrink">
-        <h4>{{ lastPackageName }}??</h4>
-        <h2>NO DRINK</h2>
-      </p>
-      <p>
-        <h3>SHAME ON YOU</h3>
-      </p>
+    <div class="description">
+      <h3><a href="https://npmjs.com/package/{{ npm.title }}" target="_blank">{{ npm.title }}</a></h3>
+      <h4>{{ npm.summary }}</h4>
     </div>
-    <div v-if="youDrink === null">
-      <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Drinking game for npm users:<br>➀ Think of a noun<br>➁ npm install &lt;noun&gt;<br>➂ If it installs - drink!</p>&mdash; Sindre Sorhus (@sindresorhus) <a href="https://twitter.com/sindresorhus/status/515511151669805056">September 26, 2014</a></blockquote>
+  </div>
+
+  <div v-if="state === 'no-drink'">
+    <div>
+      <img v-bind:src="noDrink">
+      <h4>{{ lastPackageName }}??</h4>
+      <h2>NO DRINK</h2>
     </div>
-  </p>
+    <div>
+      <h3>SHAME ON YOU</h3>
+    </div>
+  </div>
+
+  <div v-if="state === 'initial'">
+    <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Drinking game for npm users:<br>➀ Think of a noun<br>➁ npm install &lt;noun&gt;<br>➂ If it installs - drink!</p>&mdash; Sindre Sorhus (@sindresorhus) <a href="https://twitter.com/sindresorhus/status/515511151669805056">September 26, 2014</a></blockquote>
+  </div>
+
+  <div v-if="state === 'error'">
+    <p>
+      <h3>An error occured, sorry for the inconvenience</h3>
+    </p>
+  </div>
+
   <small><a href="https://github.com/sorapixels/npmdrink">npmdrink on Github</a></small>
 </template>
 
@@ -55,8 +64,7 @@ export default {
 
   data () {
     return {
-      loading: false,
-      youDrink: null,
+      state: 'initial',
       drinkImageIndex: 1,
       noDrinkImageIndex: 1,
       packageName: '',
@@ -73,30 +81,33 @@ export default {
     },
     noDrink () {
       return `/static/images/no-drink-${this.noDrinkImageIndex}.gif`;
+    },
+    loading() {
+      return this.state === 'loading';
     }
   },
   methods: {
-    onFinish() {
-      this.loading = false;
-      this.packageName = '';
-    },
-
     findPackage () {
       this.$el.parentElement.querySelector('#drinkput').blur();
-      this.loading = true;
+      this.state = 'loading';
+
       finder(this.packageName)
       .then(res => {
-        this.youDrink = true
+        this.state = 'drink';
         this.npm.title = res.name;
         this.npm.summary = res.description;
         this.drinkImageIndex = Math.floor(Math.random() * 10 + 1);
-        this.onFinish();
+        this.packageName = '';
       })
       .catch(err => {
-        this.youDrink = false;
         this.lastPackageName = this.packageName;
+        this.packageName = '';
+        if (!err.response || err.response.status !== 404) {
+          this.state = 'error';
+          return;
+        }
         this.noDrinkImageIndex = Math.floor(Math.random() * 5 + 1);
-        this.onFinish();
+        this.state = 'no-drink';
       })
     }
   }
@@ -133,6 +144,10 @@ small, small a {
 }
 .twitter-tweet.twitter-tweet-rendered {
   margin: 0 auto;
+}
+
+.description {
+  padding: 0 5%;
 }
 
 @media (min-width: 768px) {
