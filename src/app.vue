@@ -57,6 +57,8 @@ export default {
     return {
       loading: false,
       youDrink: null,
+      drinkImageIndex: 1,
+      noDrinkImageIndex: 1,
       packageName: '',
       lastPackageName: '',
       npm: {
@@ -67,10 +69,10 @@ export default {
   },
   computed: {
     drink () {
-      return `/static/images/drink-${Math.floor(Math.random() * 10 + 1)}.gif`;
+      return `/static/images/drink-${this.drinkImageIndex}.gif`;
     },
     noDrink () {
-      return `/static/images/no-drink-${Math.floor(Math.random() * 5 + 1)}.gif`;
+      return `/static/images/no-drink-${this.noDrinkImageIndex}.gif`;
     }
   },
   methods: {
@@ -87,11 +89,13 @@ export default {
         this.youDrink = true
         this.npm.title = res.name;
         this.npm.summary = res.description;
+        this.drinkImageIndex = Math.floor(Math.random() * 10 + 1);
         this.onFinish();
       })
       .catch(err => {
         this.youDrink = false;
         this.lastPackageName = this.packageName;
+        this.noDrinkImageIndex = Math.floor(Math.random() * 5 + 1);
         this.onFinish();
       })
     }
