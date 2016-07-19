@@ -20,7 +20,7 @@
         <h2>YOU DRINK!!</h2>
       </p>
       <p>
-        <h3>{{ npm.title }}</h3>
+        <h3><a href="https://npmjs.com/package/{{ npm.title }}" target="_blank">{{ npm.title }}</a></h3>
         <h4>{{ npm.summary }}</h4>
         <h4>{{ npm.stat }}</h4>
       </p>
