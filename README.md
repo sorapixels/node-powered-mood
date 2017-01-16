@@ -1,8 +1,10 @@
-# npmdrink
+🍺 npm drink 🍺
+-----
 
-> 🍺
+<https://npmdr.ink/>
 
-## Build Setup
+
+### Build Setup
 
 ``` bash
 # install dependencies
@@ -15,7 +17,14 @@ npm run dev
 npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+### Package finder
+<https://gist.github.com/xarsh/48344ddd6a54c732085496a12b6860c2>
+
+Powered by [npms](https://npms.io).
+
+
+### Origin
 
 The game is taken from the following tweet.
 

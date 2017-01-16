@@ -94,8 +94,8 @@ export default {
       finder(this.packageName)
       .then(res => {
         this.state = 'drink';
-        this.npm.title = res.name;
-        this.npm.summary = res.description;
+        this.npm.title = res.data.name;
+        this.npm.summary = res.data.description;
         this.drinkImageIndex = Math.floor(Math.random() * 10 + 1);
         this.packageName = '';
       })

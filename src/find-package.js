@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://npm-search.tuvistavie.com/';
+const API_URL = 'https://npmdrink.azurewebsites.net/api/';
 
 export default function findPackage(name) {
-  const url = BASE_URL + name;
-  return axios.get(url).then(res => res.data);
+  return axios.get(API_URL + name);
 };
