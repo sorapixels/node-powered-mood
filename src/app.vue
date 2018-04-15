@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import finder from './find-package';
+import axios from 'axios';
 import loading from './loading.vue';
 
 export default {
@@ -91,11 +91,11 @@ export default {
       this.$el.parentElement.querySelector('#drinkput').blur();
       this.state = 'loading';
 
-      finder(this.packageName)
+      axios.get(`https://api.npms.io/v2/package/${this.packageName}`)
       .then(res => {
         this.state = 'drink';
-        this.npm.title = res.data.name;
-        this.npm.summary = res.data.description;
+        this.npm.title = res.data.collected.metadata.name;
+        this.npm.summary = res.data.collected.metadata.description;
         this.drinkImageIndex = Math.floor(Math.random() * 10 + 1);
         this.packageName = '';
       })
