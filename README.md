@@ -19,10 +19,8 @@ npm run build
 
 
 ### Package finder
-<https://gist.github.com/xarsh/48344ddd6a54c732085496a12b6860c2>
 
-The package finder API is powered by [npms](https://npms.io), running on [Azure Functions](https://functions.azure.com).
-
+The package finder API is powered by [npms](https://npms.io).
 
 ### Origin
 
