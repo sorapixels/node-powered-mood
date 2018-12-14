@@ -92,7 +92,7 @@ export default {
       this.$el.parentElement.querySelector('#drinkput').blur();
       this.state = 'loading';
 
-      axios.get(`https://api.npms.io/v2/package/${this.packageName}`)
+      axios.get(`https://api.npms.io/v2/package/${this.packageName}`.toLowerCase())
       .then(res => {
         this.state = 'drink';
         this.npm.title = res.data.collected.metadata.name;
