@@ -10,6 +10,7 @@
       class="input"
       type="text"
       placeholder="Noun"
+      autocapitalize="none"
       v-model="packageName"
       v-on:keyup.13="findPackage" />
     <a class="button is-info" v-on:click="findPackage" v-if="!loading">CHECK</a>
