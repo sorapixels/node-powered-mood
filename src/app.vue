@@ -10,6 +10,7 @@
       class="input"
       type="text"
       placeholder="Noun"
+      autocapitalize="none"
       v-model="packageName"
       v-on:keyup.13="findPackage" />
     <a class="button is-info" v-on:click="findPackage" v-if="!loading">CHECK</a>
@@ -91,7 +92,7 @@ export default {
       this.$el.parentElement.querySelector('#drinkput').blur();
       this.state = 'loading';
 
-      axios.get(`https://api.npms.io/v2/package/${this.packageName}`)
+      axios.get(`https://api.npms.io/v2/package/${this.packageName}`.toLowerCase())
       .then(res => {
         this.state = 'drink';
         this.npm.title = res.data.collected.metadata.name;
